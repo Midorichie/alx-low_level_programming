@@ -10,7 +10,7 @@ int main(void)
 
 	for (i = 0; i <= 99; i++)
 	{
-		for (j = 1; j <= 99; j++)
+		for (j = 1; j < 99; j++)
 		{
 			int first_digit_i = i / 10;
 			int second_digit_i = i % 10;
