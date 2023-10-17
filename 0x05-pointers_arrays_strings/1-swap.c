@@ -2,7 +2,6 @@
 
 /**
  * swap_int - take in two variable integers and swaps them
- * @author: Hammed
  * @a: swaps and stores the address of b
  * @b: swaps and stores the address of a 
  * Return: Always 0 (Success)
