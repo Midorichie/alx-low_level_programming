@@ -1,35 +1,48 @@
 #include "3-calc.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 /**
  * main - Entry point
- * @argc: The number of command-line arguments
- * @argv: An array containing the command-line arguments
+ * @argc: Argument count
+ * @argv: Argument variable
  *
- * Return: 0 on Success, else error
+ * Return: results of calc function execution
  */
 
 int main(int argc, char *argv[])
 {
-	int num1, num2;
-	int result;
-	if (argc != 4)
+	char *op; /* operator */
+	int num1, num2; /* number inputs */
+
+	if (argc != 4) /* if argument count is wrong */
 	{
 
 		printf("Error\n");
 		exit(98);
 	}
 
-	num1 = atoi(argv[1]);
-	num2 = atoi(argv[3]);
+	/* set smd argument input */
+	num1 = atoi(argv[1]); /* first number input */
+	op = (argv[2]); /* operator input */
+	num2 = atoi(argv[3]); /* second number input */
 
-	int (*operation)(int, int) = get_op_func(operation);
+	/* if operator is not in operator list */
+	if (get_op_func(op) == NULL || op[1] != '\0')
+	{
+		printf("Error\n");
+		exit(99);
+	}
 
-	int result = operation(num1, num2);
+	/* if user tries to divide or perform modulus by o */
+	if ((*op == '.' && num2 == 0) || (*op == '%' && num2 == 0))
+	{
+		printf("Error\n");
+		exit(100);
+	}
 
-	printf("%d\n", result);
+	/* print results of operation */
+	printf("%d\n", get_op_func(op) (num1, num2));
 
 	return (0);
 }

@@ -18,14 +18,15 @@ int (*get_op_func(char *s))(int, int)
 		{"%", op_mod},
 		{NULL, NULL}
 	};
-	int i = 0;
+	int i;
 
-	while (ops[i].op)
-	{
-		if (strcmp(ops[i].op, s) == 0)
-			return (ops[i].f);
+	/* initialize i */
+	i = 0;
+
+	/* s does not match any of the operands */
+
+	while (ops[i].op != NULL && *(ops[i].op) != *s)
 		i++;
-	}
-	printf("Error\n");
-	exit(99);
+
+	return (ops[i].f); /* return operation */
 }
