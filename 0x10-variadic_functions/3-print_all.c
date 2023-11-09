@@ -1,16 +1,14 @@
 #include "variadic_functions.h"
-
 /**
- * print_all - Print any argument provided to function
+ * print_all - Print any argument provided to
+ * function
  * @format: The argument specifier
  *
  * Return: any argument given based on format specifier
  */
-
 void print_all(const char * const format, ...)
 {
 	int i, check_stat;
-
 	char *str;
 	va_list spc;
 
@@ -38,6 +36,7 @@ void print_all(const char * const format, ...)
 				if (str == NULL)
 					str = "(nil)";
 				printf("%s", str);
+				check_stat = 0;
 				break;
 			default:
 				check_stat = 1;
@@ -48,6 +47,5 @@ void print_all(const char * const format, ...)
 		i++;
 	}
 	printf("\n");
-	va_end(spc);
+	va_end(spc); /* end traversal */
 }
-
