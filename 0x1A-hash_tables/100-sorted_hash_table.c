@@ -78,7 +78,7 @@ shash_node_t *create_sorted_item(char *key, char *value)
 
 /**
  * insert_to_sll - arranges the list in a sorted manner
- * @head: head of the list
+ * @shead: head of the list
  * @new_node: new node to be added
  */
 
@@ -117,7 +117,7 @@ void insert_to_sll(shash_node_t **shead, shash_node_t *new_node)
 
 int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 {
-		
+
 	unsigned long int index;
 	shash_node_t *new_node = NULL;
 	const char *value_dup = strdup(value);
@@ -139,4 +139,121 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 	ht->array[index] = new_node;
 
 		return (1);
+}
+
+/**
+ * shash_table_get - retrieves a value associated with a key
+ * @ht: hash table to be looked into
+ * @key: Key that's looked for
+ * Return: the value associated with the element, else NULL
+ */
+
+char *shash_table_get(const shash_table_t *ht, const char *key)
+{
+
+	shash_node_t *current = NULL;
+	unsigned long int index;
+
+	if (key == NULL)
+		return (NULL);
+
+	if (ht == NULL)
+		return (NULL);
+
+	index = key_index((const unsigned char *)key, ht->size);
+	current = ht->array[index];
+	while (current != NULL)
+	{
+		if (strcmp(current->key, key) == 0)
+		{
+			return (current->value);
+		}
+		current = current->next;
+	}
+
+	return (NULL);
+}
+
+/**
+ * shash_table_print - it prints a hash table
+ * @ht: the hash table
+ */
+
+void shash_table_print(const shash_table_t *ht)
+{
+
+	unsigned long int count = 0;
+	shash_node_t *tmp = ht->shead;
+
+	if (ht != NULL)
+	{
+		printf("{");
+		while (tmp != NULL)
+		{
+			if (count > 0)
+			{
+				printf(", ");
+			}
+			printf("'%s';: '%s'", tmp->key, tmp->value);
+			tmp = tmp->next;
+			count++;
+		}
+		printf("}\n");
+	}
+}
+
+/**
+ * shash_table_print_rev - prints a hash table
+ * @ht: The hash table
+ */
+
+void shash_table_print_rev(const shash_table_t *ht)
+{
+	unsigned long int count = 0;
+	shash_node_t *tmp = ht->stail;
+
+	if (ht != NULL)
+	{
+		printf("{");
+		while (tmp != NULL)
+		{
+			if (count > 0)
+				printf(", ");
+			printf("'%s': '%s'", tmp->key, tmp->value);
+			tmp = tmp->sprev;
+			count++;
+		}
+		printf("}\n");
+	}
+}
+
+/**
+ * shash_table_delete - It deletes a hash table
+ * @ht: The hash table
+ */
+
+void shash_table_delete(shash_table_t *ht)
+{
+	unsigned long int i;
+	shash_node_t *tmp = NULL;
+	shash_node_t *current = NULL;
+
+	if (ht == NULL)
+		return;
+
+	for (i = 0; i < ht->size; i++)
+	{
+		current = ht->array[i];
+		while (current)
+		{
+			tmp = current;
+			current = current->next;
+			free(tmp->key);
+			free(tmp->value);
+			free(tmp);
+		}
+	}
+
+	free(ht->array);
+	free(ht);
 }
