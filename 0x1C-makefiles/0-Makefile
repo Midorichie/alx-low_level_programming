@@ -1,0 +1,6 @@
+# name of the executable: school
+
+school: main.c school.c
+	gcc -o school main.c school.c
+
+all: school
