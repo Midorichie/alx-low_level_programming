@@ -10,7 +10,7 @@ $(NAME): $(OBJ)
 	$(CC) $^ -o $@
 
 %.o: %.c
-	$(CC) -c -o $@ $c
+	$(CC) -c -o $@ $<
 
 all: $(NAME)
 
